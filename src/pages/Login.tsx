@@ -13,8 +13,8 @@ import api from '../services/api';
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    senha: '',
+    username: '',
+    password: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,24 +65,24 @@ const Login = () => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Usuário"
+              name="username"
+              autoComplete="Nome de usuário"
               autoFocus
-              value={formData.email}
+              value={formData.username}
               onChange={handleChange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="senha"
+              name="password"
               label="Senha"
               type="password"
-              id="senha"
+              id="password"
               autoComplete="current-password"
-              value={formData.senha}
+              value={formData.password}
               onChange={handleChange}
             />
             <Button
