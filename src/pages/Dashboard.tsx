@@ -1,80 +1,19 @@
-import { useEffect, useState } from 'react';
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-} from '@mui/material';
-import {
-  Book as BookIcon,
-  People as PeopleIcon,
-} from '@mui/icons-material';
-import Layout from '../components/Layout';
-import api from '../services/api';
+import { Box, Container, Grid, Typography } from '@mui/material';
+import Sidebar from '../components/Sidebar';
+import WelcomeBanner from '../components/WelcomeBanner';
+import ActionCards from '../components/ActionCards';
 
-const Dashboard = () => {
-  const [stats, setStats] = useState({
-    totalLivros: 0,
-    totalUsuarios: 0,
-  });
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [livrosResponse, usuariosResponse] = await Promise.all([
-          api.get('/livros'),
-          api.get('/usuarios'),
-        ]);
-
-        setStats({
-          totalLivros: livrosResponse.data.length,
-          totalUsuarios: usuariosResponse.data.length,
-        });
-      } catch (error) {
-        console.error('Erro ao buscar estatísticas:', error);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
-  return (
-    <Layout title="Dashboard">
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <BookIcon sx={{ fontSize: 40, mr: 2, color: 'primary.main' }} />
-                <Typography variant="h5" component="div">
-                  Total de Livros
-                </Typography>
-              </Box>
-              <Typography variant="h3" component="div">
-                {stats.totalLivros}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <PeopleIcon sx={{ fontSize: 40, mr: 2, color: 'primary.main' }} />
-                <Typography variant="h5" component="div">
-                  Total de Usuários
-                </Typography>
-              </Box>
-              <Typography variant="h3" component="div">
-                {stats.totalUsuarios}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Layout>
-  );
-};
+const Dashboard = () => (
+  <Box sx={{ display: 'flex', bgcolor: '#f7f9fb', minHeight: '100vh' }}>
+    <Sidebar />
+    <Box component="main" sx={{ flexGrow: 1, ml: '240px', p: 4 }}>
+      <WelcomeBanner />
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
+        Começar agora
+      </Typography>
+      <ActionCards />
+    </Box>
+  </Box>
+);
 
 export default Dashboard; 

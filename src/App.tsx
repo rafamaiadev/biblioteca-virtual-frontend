@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Livros from './pages/Livros';
 import Usuarios from './pages/Usuarios';
+import Search from './pages/Search';
 import PrivateRoute from './components/PrivateRoute';
 
 const theme = createTheme({
@@ -30,6 +31,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pesquisar"
+            element={
+              <PrivateRoute>
+                <Search />
               </PrivateRoute>
             }
           />
