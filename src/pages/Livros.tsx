@@ -19,7 +19,7 @@ import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import Layout from '../components/Layout';
 import api from '../services/api';
 
-interface Livro {
+export interface Livro {
   id: number;
   titulo: string;
   autor: string;

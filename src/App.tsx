@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Livros from './pages/Livros';
 import Usuarios from './pages/Usuarios';
 import Search from './pages/Search';
+import Acervo from './pages/Acervo';
 import PrivateRoute from './components/PrivateRoute';
 
 const theme = createTheme({
@@ -31,6 +32,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/acervo"
+            element={
+              <PrivateRoute>
+                <Acervo />
               </PrivateRoute>
             }
           />

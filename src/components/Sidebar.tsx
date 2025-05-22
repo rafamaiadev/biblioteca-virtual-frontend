@@ -1,8 +1,6 @@
 import { Box, List, ListItem, ListItemIcon, ListItemText, Divider, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import SearchIcon from '@mui/icons-material/Search';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import logo from '../assets/logo.png';
 import { Link as RouterLink } from 'react-router-dom';
@@ -36,11 +34,7 @@ const Sidebar = ({ selected }: SidebarProps) => (
           <ListItemIcon><HomeIcon color={selected === 'Início' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Início" />
         </ListItem>
-        <ListItem button component={RouterLink} to="/pesquisar" selected={selected === 'Pesquisar'}>
-          <ListItemIcon><SearchIcon color={selected === 'Pesquisar' ? 'primary' : 'inherit'} /></ListItemIcon>
-          <ListItemText primary="Pesquisar" />
-        </ListItem>
-        <ListItem button component={RouterLink} to="/catalogo" selected={selected === 'Catálogo'}>
+        <ListItem button component={RouterLink} to="/acervo" selected={selected === 'Acervo'}>
           <ListItemIcon><MenuBookIcon color={selected === 'Acervo' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Acervo" />
         </ListItem>
@@ -51,10 +45,6 @@ const Sidebar = ({ selected }: SidebarProps) => (
         <ListItem button component={RouterLink} to="/meus-livros" selected={selected === 'Meus Livros'}>
           <ListItemIcon><LibraryBooksIcon color={selected === 'Meus Livros' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Meus Livros" />
-        </ListItem>
-        <ListItem button component={RouterLink} to="/favoritos" selected={selected === 'Favoritos'}>
-          <ListItemIcon><FavoriteIcon color={selected === 'Favoritos' ? 'primary' : 'inherit'} /></ListItemIcon>
-          <ListItemText primary="Favoritos" />
         </ListItem>
       </List>
     </Box>
