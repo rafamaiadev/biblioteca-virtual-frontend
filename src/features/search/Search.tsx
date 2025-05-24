@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
-import Sidebar from '../components/Sidebar';
-import SearchBarHeader from '../components/SearchBarHeader';
-import SearchEmptyState from '../components/SearchEmptyState';
+import Sidebar from '../dashboard/Sidebar';
+import SearchBarHeader from './SearchBarHeader';
+import SearchEmptyState from './SearchEmptyState';
 
 const Search = () => (
   <Box sx={{ display: 'flex', bgcolor: '#f7f9fb', minHeight: '100vh' }}>

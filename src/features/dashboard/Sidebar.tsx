@@ -2,7 +2,7 @@ import { Box, List, ListItem, ListItemIcon, ListItemText, Divider, Typography } 
 import HomeIcon from '@mui/icons-material/Home';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { Link as RouterLink } from 'react-router-dom';
 
 interface SidebarProps {
@@ -30,11 +30,11 @@ const Sidebar = ({ selected }: SidebarProps) => (
         <img src={logo} alt="Logo" style={{ width: 120 }} />
       </Box>
       <List>
-        <ListItem button component={RouterLink} to="/dashboard" selected={selected === 'Início'}>
+        <ListItem component={RouterLink} to="/dashboard" sx={selected === 'Início' ? { bgcolor: '#e3f2fd', cursor: 'pointer' } : { cursor: 'pointer' }}>
           <ListItemIcon><HomeIcon color={selected === 'Início' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Início" />
         </ListItem>
-        <ListItem button component={RouterLink} to="/acervo" selected={selected === 'Acervo'}>
+        <ListItem component={RouterLink} to="/acervo" sx={selected === 'Acervo' ? { bgcolor: '#e3f2fd', cursor: 'pointer' } : { cursor: 'pointer' }}>
           <ListItemIcon><MenuBookIcon color={selected === 'Acervo' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Acervo" />
         </ListItem>
@@ -42,7 +42,7 @@ const Sidebar = ({ selected }: SidebarProps) => (
       <Divider sx={{ my: 2 }} />
       <Typography variant="caption" sx={{ pl: 3, color: 'gray' }}>MINHAS ESTANTES</Typography>
       <List>
-        <ListItem button component={RouterLink} to="/meus-livros" selected={selected === 'Meus Livros'}>
+        <ListItem component={RouterLink} to="/meus-livros" sx={selected === 'Meus Livros' ? { bgcolor: '#e3f2fd', cursor: 'pointer' } : { cursor: 'pointer' }}>
           <ListItemIcon><LibraryBooksIcon color={selected === 'Meus Livros' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Meus Livros" />
         </ListItem>

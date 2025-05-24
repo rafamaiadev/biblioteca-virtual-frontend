@@ -1,13 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Livros from './pages/Livros';
-import Usuarios from './pages/Usuarios';
-import Search from './pages/Search';
-import Acervo from './pages/Acervo';
-import PrivateRoute from './components/PrivateRoute';
+import AppRoutes from './routes';
 
 const theme = createTheme({
   palette: {
@@ -25,49 +19,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/acervo"
-            element={
-              <PrivateRoute>
-                <Acervo />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/pesquisar"
-            element={
-              <PrivateRoute>
-                <Search />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/livros"
-            element={
-              <PrivateRoute>
-                <Livros />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/usuarios"
-            element={
-              <PrivateRoute>
-                <Usuarios />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
+        <AppRoutes />
       </Router>
     </ThemeProvider>
   );

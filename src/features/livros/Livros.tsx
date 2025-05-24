@@ -16,8 +16,8 @@ import {
   IconButton,
 } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import Layout from '../components/Layout';
-import api from '../services/api';
+import Layout from '../dashboard/Layout';
+import api from '../../services/api';
 
 export interface Livro {
   id: number;
@@ -85,7 +85,7 @@ const Livros = () => {
   };
 
   return (
-    <Layout title="Livros">
+    <Layout>
       <Button
         variant="contained"
         startIcon={<AddIcon />}

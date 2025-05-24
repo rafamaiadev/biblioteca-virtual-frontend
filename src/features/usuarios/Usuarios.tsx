@@ -20,8 +20,9 @@ import {
   InputLabel,
 } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import Layout from '../components/Layout';
-import api from '../services/api';
+import Layout from '../dashboard/Layout';
+import api from '../../services/api';
+import type { SelectChangeEvent } from '@mui/material';
 
 interface Usuario {
   id: number;
@@ -56,9 +57,15 @@ const Usuarios = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (e: SelectChangeEvent) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -92,7 +99,7 @@ const Usuarios = () => {
   };
 
   return (
-    <Layout title="Usuários">
+    <Layout>
       <Button
         variant="contained"
         startIcon={<AddIcon />}
@@ -143,7 +150,7 @@ const Usuarios = () => {
             type="text"
             fullWidth
             value={formData.nome}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <TextField
             margin="dense"
@@ -152,7 +159,7 @@ const Usuarios = () => {
             type="email"
             fullWidth
             value={formData.email}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <TextField
             margin="dense"
@@ -161,14 +168,14 @@ const Usuarios = () => {
             type="password"
             fullWidth
             value={formData.senha}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <FormControl fullWidth margin="dense">
             <InputLabel>Perfil de Acesso</InputLabel>
             <Select
               name="perfilAcesso"
               value={formData.perfilAcesso}
-              onChange={handleChange}
+              onChange={handleSelectChange}
               label="Perfil de Acesso"
             >
               <MenuItem value="ADMIN">Administrador</MenuItem>

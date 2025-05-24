@@ -2,18 +2,15 @@ import { useState, useEffect } from 'react';
 import { 
   Container, 
   Grid, 
-  TextField, 
   Box, 
-  Typography,
   CircularProgress,
   Alert,
   Pagination,
-  InputAdornment
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import LivroCard from '../components/LivroCard';
-import api from '../services/api';
-import type { Livro } from '../pages/Livros';
+import LivroCard from '../livros/LivroCard';
+import api from '../../services/api';
+import type { Livro } from '../livros/Livros';
+import AcervoHeader from './AcervoHeader';
 
 const BASE_URL = api.defaults.baseURL?.replace(/\/$/, '') || '';
 
@@ -28,7 +25,6 @@ export default function AcervoGrid() {
   const itemsPerPage = 12;
 
   useEffect(() => {
-    console.log('useEffect disparado. searchTerm:', searchTerm);
     const fetchLivros = async () => {
       try {
         setLoading(true);
@@ -46,9 +42,11 @@ export default function AcervoGrid() {
         const response = await api.get('/livros', { params });
         console.log('Resposta da API:', response.data);
 
-        setLivros(response.data.content);
-        setTotalPages(response.data.totalPages);
-        setTotalItems(response.data.totalElements);
+        const data = response.data;
+        const livrosArr = Array.isArray(data) ? data : [];
+        setLivros(livrosArr);
+        setTotalPages(Math.ceil(livrosArr.length / itemsPerPage));
+        setTotalItems(livrosArr.length);
       } catch (err) {
         setError('Erro ao carregar os livros. Por favor, tente novamente.');
         console.error('Erro ao carregar livros:', err);
@@ -59,13 +57,18 @@ export default function AcervoGrid() {
 
     const debounceTimer = setTimeout(() => {
       fetchLivros();
-    }, 200);
+    }, 300);
 
     return () => clearTimeout(debounceTimer);
   }, [page, searchTerm]);
 
+  useEffect(() => {
+    return () => {
+      console.log('AcervoGrid desmontado');
+    };
+  }, []);
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Valor digitado:', event.target.value);
     setSearchTerm(event.target.value);
     setPage(1);
   };
@@ -74,7 +77,17 @@ export default function AcervoGrid() {
     setPage(value);
   };
 
-  if (loading && livros.length === 0) {
+  const livrosPaginados = livros.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
+  }
+
+  if (loading && (!Array.isArray(livros) || livros.length === 0)) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress />
@@ -84,41 +97,8 @@ export default function AcervoGrid() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box mb={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Acervo
-        </Typography>
-        <Typography variant="body1" color="text.secondary" paragraph>
-          Explore nossa coleção de livros
-        </Typography>
-      </Box>
-
-      <Box mb={4}>
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="Buscar por título, autor ou descrição..."
-          value={searchTerm}
-          onChange={(e) => {
-            console.log('TextField onChange disparado');
-            handleSearchChange(e as React.ChangeEvent<HTMLInputElement>);
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
-
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      )}
-
+      <AcervoHeader onSearch={setSearchTerm} initialValue={searchTerm} />
+      <Box mt={4}/>
       {!loading && livros.length === 0 && (
         <Alert severity="info">
           Nenhum livro encontrado. Tente uma busca diferente.
@@ -126,21 +106,21 @@ export default function AcervoGrid() {
       )}
 
       <Grid container spacing={3}>
-        {livros.map((livro) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={livro.id}>
+        {livrosPaginados.map((livro) => (
+          <Grid key={livro.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <LivroCard
               urlCapa={
-                livro.urlCapa.startsWith('http')
-                  ? livro.urlCapa
-                  : BASE_URL + (livro.urlCapa.startsWith('/') ? livro.urlCapa : '/' + livro.urlCapa)
+                (livro as any).urlCapa?.startsWith('http')
+                  ? (livro as any).urlCapa
+                  : BASE_URL + ((livro as any).urlCapa?.startsWith('/') ? (livro as any).urlCapa : '/' + (livro as any).urlCapa)
               }
-              titulo={livro.titulo}
-              autor={livro.autor}
-              categoria={livro.categoria}
+              titulo={(livro as any).titulo}
+              autor={(livro as any).autor}
+              categoria={(livro as any).categoria}
               urlPdf={
-                livro.urlPdf.startsWith('http')
-                  ? livro.urlPdf
-                  : BASE_URL + (livro.urlPdf.startsWith('/') ? livro.urlPdf : '/' + livro.urlPdf)
+                (livro as any).urlPdf?.startsWith('http')
+                  ? (livro as any).urlPdf
+                  : BASE_URL + ((livro as any).urlPdf?.startsWith('/') ? (livro as any).urlPdf : '/' + (livro as any).urlPdf)
               }
             />
           </Grid>

@@ -10,8 +10,8 @@ import {
   Link,
   Alert,
 } from '@mui/material';
-import api from '../services/api';
-import logo from '../assets/logo.png';
+import api from '../../services/api';
+import logo from '../../assets/logo.png';
 
 const Login = () => {
   const navigate = useNavigate();

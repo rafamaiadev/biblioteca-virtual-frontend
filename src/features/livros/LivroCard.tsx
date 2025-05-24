@@ -1,5 +1,4 @@
 import { Card, CardContent, CardMedia, Typography, Box, Button } from '@mui/material';
-import api from '../services/api';
 
 interface LivroCardProps {
   urlCapa: string;
@@ -28,10 +27,10 @@ const LivroCard = ({ urlCapa, titulo, autor, categoria, urlPdf }: LivroCardProps
   };
 
   return (
-    <Card sx={{ width: 200, m: 'auto', borderRadius: 3, boxShadow: 2, position: 'relative', cursor: 'pointer' }}>
+    <Card sx={{ width: 250, m: 'auto', borderRadius: 5, boxShadow: 2, position: 'relative', cursor: 'pointer' }}>
         <CardMedia
           component="img"
-          height="260"
+          height="250"
           image={urlCapa}
           alt={titulo}
           sx={{ objectFit: 'contain', p: 2, bgcolor: '#f8f8f8' }}

@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
-import Sidebar from '../components/Sidebar';
-import WelcomeBanner from '../components/WelcomeBanner';
-import ActionCards from '../components/ActionCards';
+import Sidebar from './Sidebar';
+import WelcomeBanner from './WelcomeBanner';
+import ActionCards from './ActionCards';
 
 const Dashboard = () => (
   <Box sx={{ display: 'flex', bgcolor: '#f7f9fb', minHeight: '100vh' }}>
