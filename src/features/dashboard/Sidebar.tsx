@@ -4,6 +4,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import logo from '../../assets/logo.png';
 import { Link as RouterLink } from 'react-router-dom';
+import UserProfileMenu from '../../components/UserProfileMenu';
 
 interface SidebarProps {
   selected?: string;

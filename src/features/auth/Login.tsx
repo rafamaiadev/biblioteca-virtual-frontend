@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import api from '../../services/api';
 import logo from '../../assets/logo.png';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const { login } = useAuth();
 
   // Limpa o token ao montar o componente
   useEffect(() => {
@@ -44,18 +46,10 @@ const Login = () => {
 
     try {
       const response = await api.post('/auth/login', formData);
-      const { token } = response.data;
-      
-      // Limpa o token antigo antes de salvar o novo
-      localStorage.removeItem('token');
-      
-      // Salva o novo token
-      localStorage.setItem('token', token);
-      
-      // Configura o token no header do axios
+      const token = response.data.token;
+      login(token);
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      navigate('/dashboard');
+      window.location.href = '/dashboard';
     } catch (error: any) {
       console.error('Erro ao fazer login:', error);
       if (error.response?.status === 403) {
