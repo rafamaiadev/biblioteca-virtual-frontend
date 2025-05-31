@@ -4,7 +4,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import logo from '../../assets/logo.png';
 import { Link as RouterLink } from 'react-router-dom';
-import UserProfileMenu from '../../components/UserProfileMenu';
+import UserProfileMenu from '../../components/UserProfile';
+import { Person } from '@mui/icons-material';
 
 interface SidebarProps {
   selected?: string;
@@ -35,6 +36,7 @@ const Sidebar = ({ selected }: SidebarProps) => (
           <ListItemIcon><HomeIcon color={selected === 'Início' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Início" />
         </ListItem>
+        
         <ListItem component={RouterLink} to="/acervo" sx={selected === 'Acervo' ? { bgcolor: '#e3f2fd', cursor: 'pointer' } : { cursor: 'pointer' }}>
           <ListItemIcon><MenuBookIcon color={selected === 'Acervo' ? 'primary' : 'inherit'} /></ListItemIcon>
           <ListItemText primary="Acervo" />
@@ -48,10 +50,17 @@ const Sidebar = ({ selected }: SidebarProps) => (
           <ListItemText primary="Meus Livros" />
         </ListItem>
       </List>
-    </Box>
-    <Box sx={{ p: 2, borderTop: '1px solid #e0e0e0', color: 'gray', fontSize: 13 }}>
-      <div>Ajuda</div>
-      <div>Configurações</div>
+      <Typography variant="caption" sx={{ pl: 3, color: 'gray' }}>PAINEL DE CONTROLE</Typography>
+      <List>
+      <ListItem component={RouterLink} to="/livros" sx={selected === 'Livros Cadastrados' ? { bgcolor: '#e3f2fd', cursor: 'pointer' } : { cursor: 'pointer' }}>
+          <ListItemIcon><MenuBookIcon color={selected === 'Livros Cadastrados' ? 'primary' : 'inherit'} /></ListItemIcon>
+          <ListItemText primary="Livros Cadastrados" />
+      </ListItem>
+      <ListItem component={RouterLink} to="/usuarios" sx={selected === 'Usuários Cadastrados' ? { bgcolor: '#e3f2fd', cursor: 'pointer' } : { cursor: 'pointer' }}>
+          <ListItemIcon><Person color={selected === 'Usuários Cadastrados' ? 'primary' : 'inherit'} /></ListItemIcon>
+          <ListItemText primary="Usuários Cadastrados" />
+      </ListItem>
+      </List>
     </Box>
   </Box>
 );
