@@ -1,3 +1,22 @@
+/* 1. IMPORTAÇÃO DAS FONTES CLÁSSICAS */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* 2. DEFINIÇÃO DA PALETA DE CORES E FONTES (CSS VARIABLES) */
+:root {
+  /* Fontes */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+
+  /* Paleta de Cores Clássica */
+  --color-primary: #7a3b3b;      /* Um bordô/marrom, como a capa de um livro antigo */
+  --color-primary-hover: #5c2d2d; /* Um tom mais escuro para o hover */
+  --color-background: #fdfaf6;    /* Um branco-quente, como papel envelhecido */
+  --color-surface: #ffffff;       /* Branco puro para o card, para contraste */
+  --color-text: #3a3a3a;          /* Cinza bem escuro para o texto, mais suave que preto */
+  --color-border: #dcdcdc;        /* Borda sutil para os inputs */
+}
+
+/* 3. ESTILOS GLOBAIS E BODY */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,46 +24,58 @@
 }
 
 body {
-  font-family: 'Roboto','Arial', sans-serif;
+  font-family: var(--font-body);
   margin: 0;
-  background-color: #f0f2f5;
+  background-color: var(--color-background);
   background-size: cover;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--color-text);
+  line-height: 1.6; /* Melhora a legibilidade */
 }
 
+/* 4. REFINAMENTO DOS COMPONENTES */
 .container {
   display: flex;
   width: 900px;
-  height: 500px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  height: 550px; /* Um pouco mais alto para acomodar melhor os elementos */
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-surface);
   border-radius: 8px;
   overflow: hidden;
 }
 
 .login-section {
   flex: 1;
-  padding: 40px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .login-section h2 {
-  margin-bottom: 20px;
-  font-size: 28px;
+  font-family: var(--font-heading);
+  margin-bottom: 25px;
+  font-size: 32px;
   color: #333;
 }
 
 form input {
+  font-family: var(--font-body); /* Garante que a fonte do input seja Lora */
+  font-size: 15px;
   width: 100%;
-  padding: 12px;
+  padding: 12px 15px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px; /* Bordas um pouco mais retas, mais clássicas */
+  transition: border-color 0.3s ease;
+}
+
+form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
 }
 
 .options {
@@ -52,53 +83,60 @@ form input {
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 button {
   width: 100%;
   padding: 12px;
-  background-color: #6366f1;
+  background-color: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 16px;
+  font-family: var(--font-body);
+  font-weight: 700; /* Deixa o texto do botão mais forte */
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #4f46e5;
+  background-color: var(--color-primary-hover);
 }
 
 .cadastro {
-  margin-top: 15px;
+  margin-top: 20px;
   font-size: 14px;
   text-align: center;
 }
 
 .cadastro a {
-  color: #6366f1;
+  color: var(--color-primary);
   text-decoration: none;
+  font-weight: 600;
 }
 
 .image-section {
   flex: 1;
-  background-color: #6366f1;
+  background-color: var(--color-primary);
   color: white;
-  padding: 40px;
+  padding: 50px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .image-section img {
-  max-width: 100%;
+  max-width: 80%; /* Ajuste para dar mais espaço */
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .descricao {
-  font-size: 16px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  font-style: italic; /* O itálico em Lora fica muito elegante */
 }

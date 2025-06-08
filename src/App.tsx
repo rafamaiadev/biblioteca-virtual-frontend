@@ -3,29 +3,52 @@ import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import AppRoutes from './routes';
 import { AuthProvider } from './contexts/AuthContext';
 
+
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#2C3E50', // azul petróleo escuro
+      main: '#0D4740',
     },
     secondary: {
-      main: '#27AE60', // verde suave
+      main: '#EF4444',
     },
     background: {
-      default: '#F4F6F7', // cinza claro quase branco
-      paper: '#FFFFFF', // branco puro
+      default: '#F8F9FA',
+      paper: '#FFFFFF',
     },
     text: {
-      primary: '#2D2D2D', // cinza escuro
-      secondary: '#7F8C8D', // cinza claro
+      primary: '#2A2A2A',
+      secondary: '#6B7280',
     },
     info: {
-      main: '#3498DB', // azul claro
+      main: '#3498DB',
     },
+    warning: {
+      main: '#F59E0B',
+    },
+    success: {
+      main: '#10B981',
+    }
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: "'Inter', sans-serif",
+    h1: {
+      fontFamily: "'Lora', serif",
+      fontSize: '2.25rem',
+      fontWeight: 700,
+    },
+    h2: {
+      fontFamily: "'Lora', serif",
+      fontSize: '1.75rem',
+      fontWeight: 700,
+    },
+    h3: {
+      fontFamily: "'Lora', serif",
+      fontSize: '1.5rem',
+      fontWeight: 700,
+    },
+
   },
   shape: {
     borderRadius: 8,
