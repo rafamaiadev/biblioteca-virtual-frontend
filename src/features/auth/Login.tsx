@@ -23,10 +23,9 @@ const Login = () => {
     const [error, setError] = useState('');
     const {login} = useAuth();
 
-    // Limpa o token ao montar o componente
     useEffect(() => {
         localStorage.removeItem('token');
-        // Remove o token do header do axios
+
         delete api.defaults.headers.common['Authorization'];
     }, []);
 
@@ -36,7 +35,7 @@ const Login = () => {
             ...prev,
             [name]: value,
         }));
-        // Limpa o erro quando o usuário começa a digitar
+
         setError('');
     };
 

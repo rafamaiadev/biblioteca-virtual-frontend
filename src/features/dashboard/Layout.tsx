@@ -1,18 +1,24 @@
 import type { ReactNode } from 'react';
-import UserProfileMenu from "../../components/UserProfile.tsx";
+import { Box } from '@mui/material';
+import UserProfileMenu from "../../components/UserProfile";
 
 interface LayoutProps {
-  children: ReactNode;
+    children: ReactNode;
+    sx?: object;
 }
 
-export default function Layout({ children }: LayoutProps) {
-  return (
-    <div className="min-h-screen flex flex-col">
-        <UserProfileMenu />
-      <main className="flex-grow container m-auto px-4 py-8">
-        {children}
-      </main>
-    </div>
-  );
+export default function Layout({ children, sx }: LayoutProps) {
+    return (
+        <Box
+            display="flex"
+            flexDirection="column"
+            minHeight="100vh"
+            sx={sx}
+        >
+            <UserProfileMenu />
+            <Box component="main" flexGrow={1} px={4} py={8}>
+                {children}
+            </Box>
+        </Box>
+    );
 }
-

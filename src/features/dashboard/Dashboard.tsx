@@ -1,19 +1,19 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Sidebar from './Sidebar';
 import WelcomeBanner from './WelcomeBanner';
-import ActionCards from './ActionCards';
+import Layout from './Layout.tsx';
+import LivrosRecentesDashboard from "./LivrosRecentesDashboard.tsx";
 
-const Dashboard = () => (
-  <Box sx={{ display: 'flex', bgcolor: '#f7f9fb', minHeight: '100vh' }}>
-    <Sidebar />
-    <Box component="main" sx={{ flexGrow: 1, ml: '240px', p: 4 }}>
-      <WelcomeBanner />
-      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
-        Começar agora
-      </Typography>
-      <ActionCards />
-    </Box>
-  </Box>
-);
+const Dashboard = () => {
+    return (
+        <Layout sx={{ display: 'flex', bgcolor: '#f7f9fb', minHeight: '100vh' }}>
+            <Sidebar />
+            <Box component="main" sx={{ flexGrow: 1, ml: 20, p: 4, width: '85vw' }}>
+                <WelcomeBanner />
+                <LivrosRecentesDashboard/>
+            </Box>
+        </Layout>
+    );
+};
 
-export default Dashboard; 
+export default Dashboard;

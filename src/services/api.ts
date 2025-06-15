@@ -4,7 +4,6 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080',
 });
 
-// Interceptor para adicionar o token em todas as requisições
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -18,12 +17,10 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor para tratar erros de resposta
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 403 || error.response?.status === 401) {
-      // Limpa o token e redireciona para o login
       localStorage.removeItem('token');
       delete api.defaults.headers.common['Authorization'];
       window.location.href = '/';

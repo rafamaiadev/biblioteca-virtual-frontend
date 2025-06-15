@@ -16,7 +16,7 @@ const AcervoHeader = ({ onSearch, initialValue = '' }: AcervoHeaderProps) => {
   };
 
   return (
-    <Box sx={{ width: '100%', bgcolor: '#4a6cf7', py: 5, px: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ width: '100%', bgcolor: '#2C3E50', py: 3, px: 2, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <TextField
         placeholder="Buscar por título, autor ou categoria"
         variant="outlined"

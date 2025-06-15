@@ -10,10 +10,12 @@ import {
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Logout from '@mui/icons-material/Logout';
 import { useAuth } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile: React.FC = () => {
   const { username, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +28,7 @@ const UserProfile: React.FC = () => {
   const handleLogout = () => {
     handleClose();
     logout();
+    navigate('/');
   };
 
   return (

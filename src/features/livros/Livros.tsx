@@ -42,6 +42,7 @@ const Livros = () => {
         pdf: null as File | null,
         capa: null as File | null,
     });
+    const [livroEditando, setLivroEditando] = useState<Livro | null>(null);
 
     const fetchLivros = async () => {
         try {
@@ -56,8 +57,19 @@ const Livros = () => {
         fetchLivros();
     }, []);
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        setLivroEditando(null);
+        setFormData({titulo: '', autor: '', categoria: ''});
+        setFileData({pdf: null, capa: null});
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setLivroEditando(null);
+        setFormData({titulo: '', autor: '', categoria: ''});
+        setFileData({pdf: null, capa: null});
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -77,29 +89,47 @@ const Livros = () => {
         }
     };
 
+    const handleEdit = (livro: Livro) => {
+        setLivroEditando(livro);
+        setFormData({
+            titulo: livro.titulo,
+            autor: livro.autor,
+            categoria: livro.categoria,
+        });
+        setFileData({pdf: null, capa: null});
+        setOpen(true);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const form = new FormData();
+        form.append('livroDTO', new Blob([
+            JSON.stringify({
+                titulo: formData.titulo,
+                autor: formData.autor,
+                categoria: formData.categoria,
+            })
+        ], {type: 'application/json'}));
+
+        if (fileData.pdf) form.append('pdf', fileData.pdf);
+        if (fileData.capa) form.append('capa', fileData.capa);
+
         try {
-            const form = new FormData();
-            form.append('livroDTO', new Blob([
-                JSON.stringify({
-                    titulo: formData.titulo,
-                    autor: formData.autor,
-                    categoria: formData.categoria,
-                })
-            ], {type: 'application/json'}));
-            if (fileData.pdf) form.append('pdf', fileData.pdf);
-            if (fileData.capa) form.append('capa', fileData.capa);
-            await api.post('/livros', form, {
-                headers: {'Content-Type': 'multipart/form-data'},
-            });
+            if (livroEditando) {
+                await api.put(`/livros/${livroEditando.id}`, form, {
+                    headers: {'Content-Type': 'multipart/form-data'},
+                });
+            } else {
+                await api.post('/livros', form, {
+                    headers: {'Content-Type': 'multipart/form-data'},
+                });
+            }
             handleClose();
-            setFormData({titulo: '', autor: '', categoria: ''});
-            setFileData({pdf: null, capa: null});
             fetchLivros();
         } catch (error) {
-            console.error('Erro ao adicionar livro:', error);
-            alert('Erro ao adicionar livro. Tente novamente.');
+            console.error('Erro ao salvar livro:', error);
+            alert('Erro ao salvar livro. Tente novamente.');
         }
     };
 
@@ -115,14 +145,10 @@ const Livros = () => {
         }
     };
 
-    const handleEdit = (livro: Livro) => {
-        alert(`Editar livro: ${livro.titulo}`);
-    };
-
     return (
-        <Layout>
+        <Layout sx={{display: 'flex', bgcolor: '#f7f9fb', minHeight: '100vh'}}>
             <Sidebar/>
-                <Container maxWidth="md" sx={{my: 4}}>
+            <Container sx={{my: 4, width: '70vw'}}>
                 <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
                     <Typography variant="h4" fontWeight={600}>Livros</Typography>
                     <Button
@@ -141,7 +167,7 @@ const Livros = () => {
                                 <TableCell>Título</TableCell>
                                 <TableCell>Autor</TableCell>
                                 <TableCell>Categoria</TableCell>
-                                <TableCell align="right" sx={{width: 120}}>Ações</TableCell>
+                                <TableCell align="center" sx={{width: 120}}>Ações</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -150,8 +176,8 @@ const Livros = () => {
                                     <TableCell>{livro.titulo}</TableCell>
                                     <TableCell>{livro.autor}</TableCell>
                                     <TableCell>{livro.categoria}</TableCell>
-                                    <TableCell align="right" sx={{width: 120, p: 0}}>
-                                        <Box display="flex" justifyContent="flex-auto" alignItems="center" gap={'2px'}>
+                                    <TableCell align="center" sx={{width: 60, p: 0}}>
+                                        <Box display="flex" justifyContent="flex-end">
                                             <IconButton
                                                 color="primary"
                                                 onClick={() => handleEdit(livro)}
@@ -177,7 +203,9 @@ const Livros = () => {
                 </TableContainer>
             </Container>
             <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-                <DialogTitle>Adicionar Novo Livro</DialogTitle>
+                <DialogTitle>
+                    {livroEditando ? 'Editar Livro' : 'Adicionar Novo Livro'}
+                </DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
@@ -251,7 +279,7 @@ const Livros = () => {
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
                     <Button onClick={handleSubmit} variant="contained">
-                        Adicionar
+                        {livroEditando ? 'Salvar' : 'Adicionar'}
                     </Button>
                 </DialogActions>
             </Dialog>
